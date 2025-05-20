@@ -1,4 +1,5 @@
 import android.content.Context
+import com.example.fitnessgymverse.data.Exercise
 import com.example.fitnessgymverse.data.WorkoutPlan
 import kotlinx.serialization.json.Json
 import java.io.IOException
@@ -20,4 +21,18 @@ object WorkoutsManager {
     }
 
     fun getWorkoutPlan(): WorkoutPlan? = workoutPlan
+
+    fun getWorkoutDays(): List<Int> {
+        val workoutDays: MutableList<Int> = mutableListOf()
+
+        workoutPlan?.workouts?.forEach { workoutDay ->
+            workoutDays.add(workoutDay.day)
+        }
+
+        return workoutDays
+    }
+
+    fun getWorkoutsByDay(day: Int): List<Exercise>? {
+        return (workoutPlan?.workouts?.last { workoutDay -> workoutDay.day == day })?.workout
+    }
 }
